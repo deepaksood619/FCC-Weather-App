@@ -12,7 +12,14 @@ var getImage = function (lat, lon) {
 
 var getWeatherData = function (lat, lon) {
   console.log("getjson");
-  $.getJSON("https://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + lon + "&appid=53ffcc0e9ab24a64bce823edccab5765", parseWeather);
+  var request = new XMLHttpRequest();
+  var url = "https://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + lon + "&appid=53ffcc0e9ab24a64bce823edccab5765";
+  request.open('GET', url, true);
+  request.onload = function() {
+    var data = JSON.parse(request.responseText);
+    parseWeather(data);
+  }
+  request.send();
 }
 
 var parseWeather = function (json) {
